@@ -1,0 +1,24 @@
+{
+  "name": "block-party-node",
+  "version": "1.0.0",
+  "description": "let's make twitter fun again",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpolitano/block-party-node.git"
+  },
+  "keywords": [
+    "twitter",
+    "node",
+    "react"
+  ],
+  "author": "Clare Hutchings",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cpolitano/block-party-node/issues"
+  },
+  "homepage": "https://github.com/cpolitano/block-party-node#readme"
+}
