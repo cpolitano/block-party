@@ -20,5 +20,12 @@
   "bugs": {
     "url": "https://github.com/cpolitano/block-party-node/issues"
   },
-  "homepage": "https://github.com/cpolitano/block-party-node#readme"
+  "homepage": "https://github.com/cpolitano/block-party-node#readme",
+  "dependencies": {
+    "react": "^0.14.7",
+    "react-dom": "^0.14.7",
+    "react-redux": "^4.4.1",
+    "redux": "^3.3.1",
+    "redux-thunk": "^2.0.1"
+  }
 }
