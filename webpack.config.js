@@ -1,5 +1,10 @@
 var path = require("path");
 
+var plugins = require("./webpack/plugins")({
+    reactPath: "react",
+    reactDOMPath: "react-dom"
+});
+
 var config = {
     context: path.join(__dirname, "src"),
     node: {
@@ -41,7 +46,8 @@ var config = {
             loader: "ejs-compiled-loader"
         }
         ]
-    }
+    },
+    plugins: plugins
 };
 
 module.exports = config;
