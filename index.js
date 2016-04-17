@@ -1,12 +1,23 @@
 "use strict";
 
 // require("dotenv").load();
-
+var path = require("path");
+var http = require("http");
 var koa = require("koa");
+var render = require("koa-ejs");
+var serve = require("koa-static");
 var app = koa();
 
-app.use(function *() {
-  this.body = "Hello World";
+app.use(serve("./public"));
+
+render(app, {
+	root: path.join(__dirname, "views"),
+	layout: "template",
+	viewExt: "ejs",
+	cache: false
 });
 
-app.listen(7000);
+app.use(require("./src/server/routes/routes"));
+
+var server = http.createServer(app.callback());
+server.listen(7000);
