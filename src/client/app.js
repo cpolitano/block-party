@@ -5,8 +5,8 @@ const { Component } = React;
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Provider, connect } from "react-redux";
+import router from "./router";
 // import reducers
-// import container component
 
 const blockPartyApp = combineReducers({});
 
@@ -14,13 +14,9 @@ const createStoreWithMiddleware = applyMiddleware(
     thunk
 )(createStore);
 
-const BlockPartyApp = () => (
-    <div>block party</div>
-);
-
 ReactDOM.render(
     <Provider store={ createStoreWithMiddleware(blockPartyApp) }>
-        <BlockPartyApp />
+        { router } 
     </Provider>,
     document.getElementById("block-party-app")
 );

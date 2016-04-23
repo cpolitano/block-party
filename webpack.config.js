@@ -41,6 +41,10 @@ var config = {
             test: /\.css$/,
             loader: "style!css"
         },
+        {
+            test: /\.less$/,
+            loader: "style!css!less"
+        },
         { 
             test: /\.ejs$/, 
             loader: "ejs-compiled-loader"
