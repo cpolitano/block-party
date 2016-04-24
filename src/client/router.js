@@ -8,7 +8,7 @@ import {
 const router = (
 	<Router>
 		<Route path="/" component={ App }>
-			<IndexRoute path="" component={ Welcome } />
+			// <IndexRoute path="" component={ Welcome } />
 		</Route>
 	</Router>
 );

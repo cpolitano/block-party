@@ -30,15 +30,10 @@ webpackJsonpBlockParty__name_([0,1],[
 	var Component = _react2.default.Component;
 
 	// import reducers
-	// import container component
 
 	var blockPartyApp = (0, _redux.combineReducers)({});
 
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
-
-	// const BlockPartyApp = () => (
-	//     <div>block party</div>
-	// );
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
@@ -20846,6 +20841,7 @@ webpackJsonpBlockParty__name_([0,1],[
 		React.createElement(
 			_reactRouter.Route,
 			{ path: "/", component: _components.App },
+			"// ",
 			React.createElement(_reactRouter.IndexRoute, { path: "", component: _components.Welcome })
 		)
 	);
@@ -26366,7 +26362,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".header {\n  background-color: light blue;\n  color: white;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n", ""]);
+	exports.push([module.id, ".header {\n  background-color: #55ACEE;\n  color: #FFF;\n  font-family: 'Quicksand', sans-serif;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  line-height: 60px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n.header-link {\n  display: inline-block;\n  margin-right: 1em;\n}\n", ""]);
 
 	// exports
 
@@ -26716,7 +26712,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".app-container {\n  margin: 0 auto;\n  width: 100%;\n}\n", ""]);
+	exports.push([module.id, ".app-container {\n  font-family: 'Quicksand', sans-serif;\n  margin: 0 auto;\n  width: 100%;\n}\n", ""]);
 
 	// exports
 
@@ -26825,7 +26821,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".welcome {\n  background-color: #EEE;\n}\n", ""]);
+	exports.push([module.id, ".welcome {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n", ""]);
 
 	// exports
 
