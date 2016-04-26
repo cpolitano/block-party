@@ -26194,6 +26194,15 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
+	var _mentions = __webpack_require__(248);
+
+	Object.defineProperty(exports, "Mentions", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_mentions).default;
+	  }
+	});
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
@@ -26362,7 +26371,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".header {\n  background-color: #55ACEE;\n  color: #FFF;\n  font-family: 'Quicksand', sans-serif;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  line-height: 60px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n.header-link {\n  display: inline-block;\n  margin-right: 1em;\n}\n", ""]);
+	exports.push([module.id, ".header {\n  background-color: #55ACEE;\n  color: #FFF;\n  font-family: 'Quicksand', sans-serif;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  line-height: 60px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n.header-link {\n  cursor: pointer;\n  display: inline-block;\n  margin-right: 1em;\n}\n", ""]);
 
 	// exports
 
@@ -26761,6 +26770,12 @@ webpackJsonpBlockParty__name_([0,1],[
 						"h1",
 						null,
 						"welcome to the block party"
+					),
+					React.createElement(
+						"div",
+						{ className: "welcome-button",
+							onClick: this.props.onSignUpClick },
+						"Sign Up"
 					)
 				);
 			}
@@ -26821,10 +26836,75 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".welcome {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n", ""]);
+	exports.push([module.id, ".welcome {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.welcome-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.5em 1em;\n  text-align: center;\n  width: 100px;\n}\n.welcome-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
 
 	// exports
 
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(React) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _reactRedux = __webpack_require__(169);
+
+	var _react = __webpack_require__(146);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Mentions = function (_Component) {
+		_inherits(Mentions, _Component);
+
+		function Mentions() {
+			_classCallCheck(this, Mentions);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Mentions).apply(this, arguments));
+		}
+
+		_createClass(Mentions, [{
+			key: "render",
+			value: function render() {
+
+				return React.createElement(
+					"div",
+					{ className: "mentions" },
+					React.createElement(
+						"h2",
+						null,
+						"Mentions"
+					)
+				);
+			}
+		}]);
+
+		return Mentions;
+	}(_react.Component);
+
+	var mapStateToProps = function mapStateToProps(state) {
+		return {
+			//
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			//
+		};
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Mentions);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(146)))
 
 /***/ }
 ]);

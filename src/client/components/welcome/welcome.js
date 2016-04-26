@@ -3,13 +3,19 @@ import { Component } from "react";
 require("./welcome.less");
 
 class Welcome extends Component {
+
 	render() {
 
 		return (
 			<div className="welcome">
 				<h1>welcome to the block party</h1>
+				<div className="welcome-button"
+					onClick={this.props.onSignUpClick}>
+					Sign Up
+				</div>
 			</div>
 		)
+
 	}
 }
 

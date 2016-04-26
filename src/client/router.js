@@ -2,7 +2,8 @@ import { Router, IndexRoute, Route } from "react-router";
 
 import { 
 	App,
-	Welcome
+	Welcome,
+	Mentions
 } from "./components";
 
 const router = (
