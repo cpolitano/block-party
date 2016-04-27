@@ -29,7 +29,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onMentionsClick: () => {
-			dispatch(getMentions())
+			dispatch(getMentions("blockdotparty"))
 		}
 	}
 }
