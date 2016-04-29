@@ -20841,8 +20841,7 @@ webpackJsonpBlockParty__name_([0,1],[
 		React.createElement(
 			_reactRouter.Route,
 			{ path: "/", component: _components.App },
-			"// ",
-			React.createElement(_reactRouter.IndexRoute, { path: "", component: _components.Welcome })
+			React.createElement(_reactRouter.IndexRoute, { path: "", component: _components.Mentions })
 		)
 	);
 
@@ -26857,6 +26856,8 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var _react = __webpack_require__(146);
 
+	var _mentions = __webpack_require__(249);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -26883,6 +26884,12 @@ webpackJsonpBlockParty__name_([0,1],[
 						"h2",
 						null,
 						"Mentions"
+					),
+					React.createElement(
+						"div",
+						{ className: "mentions-button",
+							onClick: this.props.onMentionsClick },
+						"Get Mentions"
 					)
 				);
 			}
@@ -26899,12 +26906,41 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			//
+			onMentionsClick: function onMentionsClick() {
+				dispatch((0, _mentions.getMentions)("blockdotparty"));
+			}
 		};
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Mentions);
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(146)))
+
+/***/ },
+/* 249 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var getMentions = exports.getMentions = function getMentions(screen_name) {
+		return function (dispatch) {
+			fetch("/api/mentions/" + screen_name, {
+				credentials: "same-origin"
+			}).then(function (res) {
+				return res.json();
+			}).then(function (responseData) {
+				if (responseData.success) {
+					console.log(responseData);
+					dispatch({
+						type: "LOAD_MENTIONS",
+						mentions: responseData.data
+					});
+				}
+			});
+		};
+	};
 
 /***/ }
 ]);
