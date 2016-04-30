@@ -1,6 +1,7 @@
 require("dotenv").load();
 
 var Twitter = require("twitter");
+var thunkify = require("thunkify");
 
 var client = new Twitter({
 	consumer_key: process.env.TWITTER_CONSUMER_KEY,
@@ -9,21 +10,21 @@ var client = new Twitter({
 	access_token_secret: process.env.TWITTER_ACCESS_SECRET
 });
 
-var getTweets = function(params) {
-	return client.get("statuses/user_timeline", params, function(error, tweets, response) {
-		if (!error) {
-			return tweets;
-		}
-	});
-};
+var getTimeline = thunkify(client.get);
 
 var router = require("koa-router")();
 
 router.get("/:screen_name", function *() {
 
-	var params = {screen_name: `${this.params.screen_name}`};
-
-	this.body = yield getTweets(params);
+	var screen_name = this.params.screen_name;
+	var params = {screen_name: screen_name};
+	var response = yield getTimeline.call(client, "statuses/user_timeline", params); 
+	var tweets = response[0];
+	
+	this.body = {
+		success: true,
+		tweets: tweets
+	};
 
 })
 
