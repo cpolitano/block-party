@@ -10,7 +10,7 @@ export const getMentions = (screen_name) => {
 				console.log(responseData);
 				dispatch({
 					type: "LOAD_MENTIONS",
-					mentions: responseData.data
+					mentions: responseData.tweets
 				});
 			}
 		})

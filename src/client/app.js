@@ -6,10 +6,10 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Provider, connect } from "react-redux";
 import router from "./router";
-// import reducers
+const reducers = require("./reducers")
 
-const blockPartyApp = combineReducers({});
-
+const combinedReducers = combineReducers(reducers);
+const blockPartyApp = combineReducers(reducers);
 const createStoreWithMiddleware = applyMiddleware(
     thunk
 )(createStore);
