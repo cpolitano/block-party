@@ -7,7 +7,6 @@ export const getMentions = (screen_name) => {
 		.then((res) => res.json())
 		.then((responseData) => {
 			if (responseData.success) {
-				console.log(responseData);
 				dispatch({
 					type: "LOAD_MENTIONS",
 					mentions: responseData.tweets

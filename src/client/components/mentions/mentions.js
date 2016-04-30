@@ -8,18 +8,18 @@ require("./mentions.less");
 class Mentions extends Component {
 
 	renderTweets(tweet) {
+		const tweetUrl = "https://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str;
 
 		return (
-			<li>
-				{tweet.user.screen_name}<br/>
+			<li key={tweet.id}>
+				<span className="mentions-user">{tweet.user.screen_name}</span>
 				{tweet.text}<br/>
-				{tweet.created_at}
+				<a href={tweetUrl} target="_blank">{tweet.created_at}</a>
 			</li>
 		)
 	}
 
 	render() {
-		console.log("props", this.props);
 
 		return (
 			<div className="mentions">
@@ -28,7 +28,7 @@ class Mentions extends Component {
 					onClick={this.props.onMentionsClick}>
 					Get Mentions
 				</div>
-				<ul>
+				<ul className="mentions-list">
 					{this.props.mentions.map(this.renderTweets, this)}
 				</ul>
 			</div>
@@ -38,7 +38,6 @@ class Mentions extends Component {
 
 const mapStateToProps = (state) => {
 	let mentions = state.mentions.mentions || [];
-	console.log("state", state);
 
 	return {
 		mentions

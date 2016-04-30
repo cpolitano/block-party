@@ -18,7 +18,7 @@ router.get("/:screen_name", function *() {
 
 	var screen_name = this.params.screen_name;
 	var params = {screen_name: screen_name};
-	var response = yield getTimeline.call(client, "statuses/user_timeline", params); 
+	var response = yield getTimeline.call(client, "statuses/mentions_timeline", params); 
 	var tweets = response[0];
 	
 	this.body = {
