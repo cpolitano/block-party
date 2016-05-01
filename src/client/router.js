@@ -1,4 +1,4 @@
-import { Router, IndexRoute, Route } from "react-router";
+import { Router, IndexRoute, Route, browserHistory } from "react-router";
 
 import { 
 	App,
@@ -7,9 +7,10 @@ import {
 } from "./components";
 
 const router = (
-	<Router>
+	<Router history={ browserHistory }>
 		<Route path="/" component={ App }>
-			<IndexRoute path="" component={ Mentions } />
+			<IndexRoute component={ Welcome } />
+			<Route path="mentions" component={ Mentions }></Route>
 		</Route>
 	</Router>
 );

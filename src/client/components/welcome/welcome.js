@@ -11,7 +11,11 @@ class Welcome extends Component {
 				<h1>welcome to the block party</h1>
 				<div className="welcome-button"
 					onClick={this.props.onSignUpClick}>
-					Sign Up
+					sign up
+				</div>
+				<div className="welcome-button"
+					onClick={this.props.onMentionsClick}>
+					go to mentions
 				</div>
 			</div>
 		)
@@ -29,6 +33,11 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onSignUpClick: () => {
 			// sign up
+		},
+		onMentionsClick: () => {
+			dispatch({
+				type: "CLICK_MENTIONS"
+			})
 		}
 	}
 }
