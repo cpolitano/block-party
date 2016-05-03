@@ -29,10 +29,10 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var Component = _react2.default.Component;
 
-	// import reducers
+	var reducers = __webpack_require__(252);
 
-	var blockPartyApp = (0, _redux.combineReducers)({});
-
+	var combinedReducers = (0, _redux.combineReducers)(reducers);
+	var blockPartyApp = (0, _redux.combineReducers)(reducers);
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
 
 	_reactDom2.default.render(_react2.default.createElement(
@@ -20837,11 +20837,12 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var router = React.createElement(
 		_reactRouter.Router,
-		null,
+		{ history: _reactRouter.browserHistory },
 		React.createElement(
 			_reactRouter.Route,
 			{ path: "/", component: _components.App },
-			React.createElement(_reactRouter.IndexRoute, { path: "", component: _components.Mentions })
+			React.createElement(_reactRouter.IndexRoute, { component: _components.Welcome }),
+			React.createElement(_reactRouter.Route, { path: "mentions", component: _components.Mentions })
 		)
 	);
 
@@ -25563,19 +25564,32 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	    var basename = options.basename;
 
-	    // Automatically use the value of <base href> in HTML
-	    // documents as basename if it's not explicitly given.
-	    if (basename == null && _ExecutionEnvironment.canUseDOM) {
-	      var base = document.getElementsByTagName('base')[0];
+	    var checkedBaseHref = false;
 
-	      if (base) {
-	         true ? _warning2['default'](false, 'Automatically setting basename using <base href> is deprecated and will ' + 'be removed in the next major release. The semantics of <base href> are ' + 'subtly different from basename. Please pass the basename explicitly in ' + 'the options to createHistory') : undefined;
-
-	        basename = base.getAttribute('href');
+	    function checkBaseHref() {
+	      if (checkedBaseHref) {
+	        return;
 	      }
+
+	      // Automatically use the value of <base href> in HTML
+	      // documents as basename if it's not explicitly given.
+	      if (basename == null && _ExecutionEnvironment.canUseDOM) {
+	        var base = document.getElementsByTagName('base')[0];
+	        var baseHref = base && base.getAttribute('href');
+
+	        if (baseHref != null) {
+	          basename = baseHref;
+
+	           true ? _warning2['default'](false, 'Automatically setting basename using <base href> is deprecated and will ' + 'be removed in the next major release. The semantics of <base href> are ' + 'subtly different from basename. Please pass the basename explicitly in ' + 'the options to createHistory') : undefined;
+	        }
+	      }
+
+	      checkedBaseHref = true;
 	    }
 
 	    function addBasename(location) {
+	      checkBaseHref();
+
 	      if (basename && location.basename == null) {
 	        if (location.pathname.indexOf(basename) === 0) {
 	          location.pathname = location.pathname.substring(basename.length);
@@ -25591,6 +25605,8 @@ webpackJsonpBlockParty__name_([0,1],[
 	    }
 
 	    function prependBasename(location) {
+	      checkBaseHref();
+
 	      if (!basename) return location;
 
 	      if (typeof location === 'string') location = _PathUtils.parsePath(location);
@@ -26774,7 +26790,13 @@ webpackJsonpBlockParty__name_([0,1],[
 						"div",
 						{ className: "welcome-button",
 							onClick: this.props.onSignUpClick },
-						"Sign Up"
+						"sign up"
+					),
+					React.createElement(
+						"div",
+						{ className: "welcome-button",
+							onClick: this.props.onMentionsClick },
+						"go to mentions"
 					)
 				);
 			}
@@ -26793,6 +26815,11 @@ webpackJsonpBlockParty__name_([0,1],[
 		return {
 			onSignUpClick: function onSignUpClick() {
 				// sign up
+			},
+			onMentionsClick: function onMentionsClick() {
+				dispatch({
+					type: "CLICK_MENTIONS"
+				});
 			}
 		};
 	};
@@ -26864,6 +26891,8 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	__webpack_require__(250);
+
 	var Mentions = function (_Component) {
 		_inherits(Mentions, _Component);
 
@@ -26874,6 +26903,28 @@ webpackJsonpBlockParty__name_([0,1],[
 		}
 
 		_createClass(Mentions, [{
+			key: "renderTweets",
+			value: function renderTweets(tweet) {
+				var tweetUrl = "https://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str;
+
+				return React.createElement(
+					"li",
+					{ key: tweet.id },
+					React.createElement(
+						"span",
+						{ className: "mentions-user" },
+						tweet.user.screen_name
+					),
+					tweet.text,
+					React.createElement("br", null),
+					React.createElement(
+						"a",
+						{ href: tweetUrl, target: "_blank" },
+						tweet.created_at
+					)
+				);
+			}
+		}, {
 			key: "render",
 			value: function render() {
 
@@ -26890,6 +26941,11 @@ webpackJsonpBlockParty__name_([0,1],[
 						{ className: "mentions-button",
 							onClick: this.props.onMentionsClick },
 						"Get Mentions"
+					),
+					React.createElement(
+						"ul",
+						{ className: "mentions-list" },
+						this.props.mentions.map(this.renderTweets, this)
 					)
 				);
 			}
@@ -26899,8 +26955,10 @@ webpackJsonpBlockParty__name_([0,1],[
 	}(_react.Component);
 
 	var mapStateToProps = function mapStateToProps(state) {
+		var mentions = state.mentions.mentions || [];
+
 		return {
-			//
+			mentions: mentions
 		};
 	};
 
@@ -26932,13 +26990,198 @@ webpackJsonpBlockParty__name_([0,1],[
 				return res.json();
 			}).then(function (responseData) {
 				if (responseData.success) {
-					console.log(responseData);
 					dispatch({
 						type: "LOAD_MENTIONS",
-						mentions: responseData.data
+						mentions: responseData.tweets
 					});
 				}
 			});
+		};
+	};
+
+/***/ },
+/* 250 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(251);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(242)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./mentions.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./mentions.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 251 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(241)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".mentions {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.mentions-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.mentions-user {\n  display: block;\n  font-weight: 400;\n}\n.mentions-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.mentions-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 252 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _router = __webpack_require__(253);
+
+	Object.defineProperty(exports, "router", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_router).default;
+	  }
+	});
+
+	var _mentions = __webpack_require__(255);
+
+	Object.defineProperty(exports, "mentions", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_mentions).default;
+	  }
+	});
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = placeholder;
+
+	var _router = __webpack_require__(254);
+
+	var actions = _interopRequireWildcard(_router);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+		mention_id: null,
+		block_id: null
+	};
+
+	var actionsMap = {
+		"CLICK_SIGNUP": actions.signup,
+		"CLICK_LOGIN": actions.login,
+		"CLICK_LOGOUT": actions.logout,
+		"CLICK_MENTIONS": actions.toMentions
+	};
+
+	function placeholder() {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+		var action = arguments[1];
+
+		var fn = actionsMap[action.type];
+		if (!fn) return state;
+		return Object.assign({}, state, fn(state, action));
+	}
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.toMentions = exports.logout = exports.login = exports.signup = undefined;
+
+	var _reactRouter = __webpack_require__(178);
+
+	var signup = exports.signup = function signup(state, action) {
+		_reactRouter.browserHistory.push("/");
+	};
+
+	var login = exports.login = function login(state, action) {
+		_reactRouter.browserHistory.push("/");
+	};
+
+	var logout = exports.logout = function logout(state, action) {
+		_reactRouter.browserHistory.push("/");
+	};
+
+	var toMentions = exports.toMentions = function toMentions(state, action) {
+		_reactRouter.browserHistory.push("/mentions");
+	};
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+		var action = arguments[1];
+
+		var fn = actionsMap[action.type];
+		if (!fn) return state;
+		var newState = Object.assign({}, state, fn(state, action));
+		return newState;
+	};
+
+	var _mentions = __webpack_require__(256);
+
+	var actions = _interopRequireWildcard(_mentions);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+		mentions: []
+	};
+
+	var actionsMap = {
+		"LOAD_MENTIONS": actions.loadMentions
+	};
+
+/***/ },
+/* 256 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var loadMentions = exports.loadMentions = function loadMentions(state, action) {
+		return {
+			mentions: action.mentions
 		};
 	};
 
