@@ -17,6 +17,10 @@ class Welcome extends Component {
 					onClick={this.props.onMentionsClick}>
 					go to mentions
 				</div>
+				<div className="welcome-button"
+					onClick={this.props.onBlocksClick}>
+					go to blocks
+				</div>
 			</div>
 		)
 
@@ -37,6 +41,11 @@ const mapDispatchToProps = (dispatch) => {
 		onMentionsClick: () => {
 			dispatch({
 				type: "CLICK_MENTIONS"
+			})
+		},
+		onBlocksClick: () => {
+			dispatch({
+				type: "CLICK_BLOCKS"
 			})
 		}
 	}

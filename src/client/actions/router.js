@@ -15,3 +15,7 @@ export const logout = (state, action) => {
 export const toMentions = (state, action) => {
 	browserHistory.push("/mentions");
 }
+
+export const toBlocks = (state, action) => {
+	browserHistory.push("/blocks");
+}

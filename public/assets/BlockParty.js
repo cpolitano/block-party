@@ -29,7 +29,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var Component = _react2.default.Component;
 
-	var reducers = __webpack_require__(252);
+	var reducers = __webpack_require__(255);
 
 	var combinedReducers = (0, _redux.combineReducers)(reducers);
 	var blockPartyApp = (0, _redux.combineReducers)(reducers);
@@ -20842,7 +20842,8 @@ webpackJsonpBlockParty__name_([0,1],[
 			_reactRouter.Route,
 			{ path: "/", component: _components.App },
 			React.createElement(_reactRouter.IndexRoute, { component: _components.Welcome }),
-			React.createElement(_reactRouter.Route, { path: "mentions", component: _components.Mentions })
+			React.createElement(_reactRouter.Route, { path: "mentions", component: _components.Mentions }),
+			React.createElement(_reactRouter.Route, { path: "blocks", component: _components.Blocks })
 		)
 	);
 
@@ -26218,6 +26219,15 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
+	var _blocks = __webpack_require__(252);
+
+	Object.defineProperty(exports, "Blocks", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_blocks).default;
+	  }
+	});
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
@@ -27043,13 +27053,152 @@ webpackJsonpBlockParty__name_([0,1],[
 /* 252 */
 /***/ function(module, exports, __webpack_require__) {
 
+	/* WEBPACK VAR INJECTION */(function(React) {"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _reactRedux = __webpack_require__(169);
+
+	var _react = __webpack_require__(146);
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import {
+	// 	getBlocks
+	// } from "../../actions/async/blocks"
+	__webpack_require__(253);
+
+	var Blocks = function (_Component) {
+		_inherits(Blocks, _Component);
+
+		function Blocks() {
+			_classCallCheck(this, Blocks);
+
+			return _possibleConstructorReturn(this, Object.getPrototypeOf(Blocks).apply(this, arguments));
+		}
+
+		_createClass(Blocks, [{
+			key: "renderBlocks",
+			value: function renderBlocks(block) {
+
+				return React.createElement(
+					"li",
+					{ key: block.id },
+					React.createElement(
+						"span",
+						{ className: "block-user" },
+						block.user.screen_name
+					)
+				);
+			}
+		}, {
+			key: "render",
+			value: function render() {
+
+				return React.createElement(
+					"div",
+					{ className: "blocks" },
+					React.createElement(
+						"h2",
+						null,
+						"Blocks"
+					),
+					React.createElement(
+						"div",
+						{ className: "blocks-button",
+							onClick: this.props.onBlocksClick },
+						"Get Blocks"
+					),
+					React.createElement(
+						"ul",
+						{ className: "blocks-list" },
+						this.props.blocks.map(this.renderBlocks, this)
+					)
+				);
+			}
+		}]);
+
+		return Blocks;
+	}(_react.Component);
+
+	var mapStateToProps = function mapStateToProps(state) {
+		var blocks = state.blocks.blocks || [];
+
+		return {
+			blocks: blocks
+		};
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+		return {
+			onBlocksClick: function onBlocksClick() {
+				// dispatch(getBlocks("blockdotparty"))
+			}
+		};
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Blocks);
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(146)))
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(254);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(242)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./blocks.less", function() {
+				var newContent = require("!!./../../../../node_modules/css-loader/index.js!./../../../../node_modules/less-loader/index.js!./blocks.less");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(241)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".blocks {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.blocks-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.block-user {\n  display: block;\n  font-weight: 400;\n}\n.blocks-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.blocks-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
+
+	// exports
+
+
+/***/ },
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 
-	var _router = __webpack_require__(253);
+	var _router = __webpack_require__(256);
 
 	Object.defineProperty(exports, "router", {
 	  enumerable: true,
@@ -27058,7 +27207,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
-	var _mentions = __webpack_require__(255);
+	var _mentions = __webpack_require__(258);
 
 	Object.defineProperty(exports, "mentions", {
 	  enumerable: true,
@@ -27070,7 +27219,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 253 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27080,7 +27229,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	});
 	exports.default = placeholder;
 
-	var _router = __webpack_require__(254);
+	var _router = __webpack_require__(257);
 
 	var actions = _interopRequireWildcard(_router);
 
@@ -27108,7 +27257,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	}
 
 /***/ },
-/* 254 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27137,7 +27286,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 255 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27156,7 +27305,7 @@ webpackJsonpBlockParty__name_([0,1],[
 		return newState;
 	};
 
-	var _mentions = __webpack_require__(256);
+	var _mentions = __webpack_require__(259);
 
 	var actions = _interopRequireWildcard(_mentions);
 
@@ -27171,7 +27320,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 256 */
+/* 259 */
 /***/ function(module, exports) {
 
 	"use strict";
