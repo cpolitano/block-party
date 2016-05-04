@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import { Component } from "react";
-// import {
-// 	getBlocks
-// } from "../../actions/async/blocks"
+import {
+	getBlocks
+} from "../../actions/async/blocks"
 require("./blocks.less");
 
 class Blocks extends Component {
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onBlocksClick: () => {
-			// dispatch(getBlocks("blockdotparty"))
+			dispatch(getBlocks("blockdotparty"))
 		}
 	}
 }
