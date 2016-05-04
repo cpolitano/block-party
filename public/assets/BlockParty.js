@@ -26807,6 +26807,12 @@ webpackJsonpBlockParty__name_([0,1],[
 						{ className: "welcome-button",
 							onClick: this.props.onMentionsClick },
 						"go to mentions"
+					),
+					React.createElement(
+						"div",
+						{ className: "welcome-button",
+							onClick: this.props.onBlocksClick },
+						"go to blocks"
 					)
 				);
 			}
@@ -26829,6 +26835,11 @@ webpackJsonpBlockParty__name_([0,1],[
 			onMentionsClick: function onMentionsClick() {
 				dispatch({
 					type: "CLICK_MENTIONS"
+				});
+			},
+			onBlocksClick: function onBlocksClick() {
+				dispatch({
+					type: "CLICK_BLOCKS"
 				});
 			}
 		};
@@ -27216,6 +27227,15 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
+	var _blocks = __webpack_require__(260);
+
+	Object.defineProperty(exports, "blocks", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_blocks).default;
+	  }
+	});
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
@@ -27244,7 +27264,8 @@ webpackJsonpBlockParty__name_([0,1],[
 		"CLICK_SIGNUP": actions.signup,
 		"CLICK_LOGIN": actions.login,
 		"CLICK_LOGOUT": actions.logout,
-		"CLICK_MENTIONS": actions.toMentions
+		"CLICK_MENTIONS": actions.toMentions,
+		"CLICK_BLOCKS": actions.toBlocks
 	};
 
 	function placeholder() {
@@ -27265,7 +27286,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.toMentions = exports.logout = exports.login = exports.signup = undefined;
+	exports.toBlocks = exports.toMentions = exports.logout = exports.login = exports.signup = undefined;
 
 	var _reactRouter = __webpack_require__(178);
 
@@ -27283,6 +27304,10 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var toMentions = exports.toMentions = function toMentions(state, action) {
 		_reactRouter.browserHistory.push("/mentions");
+	};
+
+	var toBlocks = exports.toBlocks = function toBlocks(state, action) {
+		_reactRouter.browserHistory.push("/blocks");
 	};
 
 /***/ },
@@ -27331,6 +27356,55 @@ webpackJsonpBlockParty__name_([0,1],[
 	var loadMentions = exports.loadMentions = function loadMentions(state, action) {
 		return {
 			mentions: action.mentions
+		};
+	};
+
+/***/ },
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+		var action = arguments[1];
+
+		var fn = actionsMap[action.type];
+		if (!fn) return state;
+		var newState = Object.assign({}, state, fn(state, action));
+		return newState;
+	};
+
+	var _blocks = __webpack_require__(261);
+
+	var actions = _interopRequireWildcard(_blocks);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+		blocks: []
+	};
+
+	var actionsMap = {
+		"LOAD_BLOCKS": actions.loadBlocks
+	};
+
+/***/ },
+/* 261 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var loadBlocks = exports.loadBlocks = function loadBlocks(state, action) {
+		return {
+			blocks: action.blocks
 		};
 	};
 
