@@ -29,7 +29,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var Component = _react2.default.Component;
 
-	var reducers = __webpack_require__(255);
+	var reducers = __webpack_require__(256);
 
 	var combinedReducers = (0, _redux.combineReducers)(reducers);
 	var blockPartyApp = (0, _redux.combineReducers)(reducers);
@@ -27076,16 +27076,15 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var _react = __webpack_require__(146);
 
+	var _blocks = __webpack_require__(253);
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	// import {
-	// 	getBlocks
-	// } from "../../actions/async/blocks"
-	__webpack_require__(253);
+	__webpack_require__(254);
 
 	var Blocks = function (_Component) {
 		_inherits(Blocks, _Component);
@@ -27151,7 +27150,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
 			onBlocksClick: function onBlocksClick() {
-				// dispatch(getBlocks("blockdotparty"))
+				dispatch((0, _blocks.getBlocks)("blockdotparty"));
 			}
 		};
 	};
@@ -27161,12 +27160,38 @@ webpackJsonpBlockParty__name_([0,1],[
 
 /***/ },
 /* 253 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var getBlocks = exports.getBlocks = function getBlocks(screen_name) {
+		return function (dispatch) {
+			fetch("/api/blocks/" + screen_name, {
+				credentials: "same-origin"
+			}).then(function (res) {
+				return res.json();
+			}).then(function (responseData) {
+				if (responseData.success) {
+					dispatch({
+						type: "LOAD_BLOCKS",
+						blocks: responseData.blocks
+					});
+				}
+			});
+		};
+	};
+
+/***/ },
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(254);
+	var content = __webpack_require__(255);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(242)(content, {});
@@ -27186,7 +27211,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	}
 
 /***/ },
-/* 254 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(241)();
@@ -27200,7 +27225,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 /***/ },
-/* 255 */
+/* 256 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27209,7 +27234,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	  value: true
 	});
 
-	var _router = __webpack_require__(256);
+	var _router = __webpack_require__(257);
 
 	Object.defineProperty(exports, "router", {
 	  enumerable: true,
@@ -27218,7 +27243,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
-	var _mentions = __webpack_require__(258);
+	var _mentions = __webpack_require__(259);
 
 	Object.defineProperty(exports, "mentions", {
 	  enumerable: true,
@@ -27227,7 +27252,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
-	var _blocks = __webpack_require__(260);
+	var _blocks = __webpack_require__(261);
 
 	Object.defineProperty(exports, "blocks", {
 	  enumerable: true,
@@ -27239,7 +27264,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ },
-/* 256 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27249,7 +27274,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	});
 	exports.default = placeholder;
 
-	var _router = __webpack_require__(257);
+	var _router = __webpack_require__(258);
 
 	var actions = _interopRequireWildcard(_router);
 
@@ -27278,7 +27303,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	}
 
 /***/ },
-/* 257 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27311,7 +27336,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 258 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27330,7 +27355,7 @@ webpackJsonpBlockParty__name_([0,1],[
 		return newState;
 	};
 
-	var _mentions = __webpack_require__(259);
+	var _mentions = __webpack_require__(260);
 
 	var actions = _interopRequireWildcard(_mentions);
 
@@ -27345,7 +27370,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 259 */
+/* 260 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -27360,7 +27385,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 260 */
+/* 261 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27379,7 +27404,7 @@ webpackJsonpBlockParty__name_([0,1],[
 		return newState;
 	};
 
-	var _blocks = __webpack_require__(261);
+	var _blocks = __webpack_require__(262);
 
 	var actions = _interopRequireWildcard(_blocks);
 
@@ -27394,7 +27419,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 261 */
+/* 262 */
 /***/ function(module, exports) {
 
 	"use strict";

@@ -11,7 +11,8 @@ class Blocks extends Component {
 
 		return (
 			<li key={block.id}>
-				<span className="block-user">{block.user.screen_name}</span>
+				<span className="block-user">{block.name}</span>
+				{block.screen_name}
 			</li>
 		)
 	}
