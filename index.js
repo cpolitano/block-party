@@ -1,6 +1,6 @@
 "use strict";
 
-require("dotenv").load();
+// require("dotenv").load();
 var path = require("path");
 var http = require("http");
 var koa = require("koa");
