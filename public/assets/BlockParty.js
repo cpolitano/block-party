@@ -27101,12 +27101,13 @@ webpackJsonpBlockParty__name_([0,1],[
 
 				return React.createElement(
 					"li",
-					{ key: block.id },
+					{ key: block.id_str },
 					React.createElement(
 						"span",
 						{ className: "block-user" },
-						block.user.screen_name
-					)
+						block.name
+					),
+					block.screen_name
 				);
 			}
 		}, {
@@ -27175,6 +27176,7 @@ webpackJsonpBlockParty__name_([0,1],[
 				return res.json();
 			}).then(function (responseData) {
 				if (responseData.success) {
+					console.log(responseData);
 					dispatch({
 						type: "LOAD_BLOCKS",
 						blocks: responseData.blocks

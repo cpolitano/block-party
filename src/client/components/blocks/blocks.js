@@ -10,7 +10,7 @@ class Blocks extends Component {
 	renderBlocks(block) {
 
 		return (
-			<li key={block.id}>
+			<li key={block.id_str}>
 				<span className="block-user">{block.name}</span>
 				{block.screen_name}
 			</li>
