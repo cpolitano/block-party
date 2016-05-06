@@ -1,6 +1,9 @@
 import { connect } from "react-redux";
 import { Component } from "react";
 import Header from "./header";
+import {
+	login
+} from "../../actions/async/router"
 require("./app.less");
 
 class App extends Component {
@@ -27,7 +30,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
 		onLogInClick: () => {
-			// login
+			dispatch(login())
 		},
 		onSignUpClick: () => {
 			// sign up

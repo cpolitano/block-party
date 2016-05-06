@@ -19,6 +19,7 @@ render(app, {
 
 app.use(require("./src/server/routes/routes"));
 app.use(require("./src/server/routes/api"));
+app.use(require("./src/server/routes/auth"));
 
 var server = http.createServer(app.callback());
 server.listen(7000);
