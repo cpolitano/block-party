@@ -3,7 +3,7 @@ require("dotenv").load();
 
 const router = require("koa-router")();
 const thunkify = require("thunkify");
-const OAuth= require("oauth").OAuth;
+const OAuth = require("oauth").OAuth;
 const callback = process.env.BLOCK_PARTY_URL + "/auth/callback";
 
 const oa = new OAuth(
@@ -37,8 +37,9 @@ router.get("/auth/twitter", function *() {
 
 router.get("/auth/callback", function *() {
 
-	let response = yield getAccessToken.call(oa);
-	console.log(response);
+	console.log(this.query);
+	// let response = yield getAccessToken.call(oa);
+	// console.log(response);
 
 	this.redirect("/mentions");
 

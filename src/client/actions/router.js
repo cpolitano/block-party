@@ -5,7 +5,7 @@ export const signup = (state, action) => {
 }
 
 export const login = (state, action) => {
-	browserHistory.push("/");
+	browserHistory.push("/auth/twitter");
 }
 
 export const logout = (state, action) => {

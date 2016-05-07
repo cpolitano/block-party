@@ -6,18 +6,9 @@ export default function Header(props) {
 	return (
 		<header className="header">
 			<div className="header-group">
-				<div className="header-link"
-					onClick={props.onLogInClick}>
+				<a href="/auth/twitter" className="header-link">
 					Log In
-				</div>
-				<div className="header-link"
-					onClick={props.onSignUpClick}>
-					Sign Up
-				</div>
-				<div className="header-link"
-					onClick={props.onLogOutClick}>
-					Log Out
-				</div>
+				</a>
 			</div>
 		</header>
 	)
