@@ -1,6 +1,6 @@
 "use strict";
 
-// require("dotenv").load();
+require("dotenv").load();
 var path = require("path");
 var http = require("http");
 var koa = require("koa");
@@ -22,4 +22,4 @@ app.use(require("./src/server/routes/api"));
 app.use(require("./src/server/routes/auth"));
 
 var server = http.createServer(app.callback());
-server.listen(7000);
+server.listen(process.env.BLOCK_PARTY_PORT);
