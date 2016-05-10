@@ -17,6 +17,22 @@ render(app, {
 	cache: false
 });
 
+// TODO get user info from auth callback
+app.use(function* (next) {
+	this.user = {};
+	yield next;
+});
+
+// TODO check user authentication
+app.use(function* (next) {
+	if (this.user) {
+		yield next;
+	}
+	else {
+		this.redirect("/");
+	}
+});
+
 app.use(require("./src/server/routes/routes"));
 app.use(require("./src/server/routes/api"));
 app.use(require("./src/server/routes/auth"));
