@@ -26,14 +26,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onLogInClick: () => {
-			dispatch({
-				type: "CLICK_LOGIN"
-			})
-		},
-		onSignUpClick: () => {
-			// sign up
-		},
 		onLogOutClick: () => {
 			// log out
 		}
