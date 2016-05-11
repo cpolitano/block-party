@@ -6,6 +6,7 @@ var http = require("http");
 var koa = require("koa");
 var render = require("koa-ejs");
 var serve = require("koa-static");
+var session = require("koa-generic-session");
 var app = koa();
 
 app.use(serve("./public"));
@@ -17,13 +18,18 @@ render(app, {
 	cache: false
 });
 
-// TODO get user info from auth callback
+app.keys = ["KEYS", process.env.SESSION_KEY];
+
+app.use(session({
+	user: true
+}));
+
 app.use(function* (next) {
-	this.user = {};
+	this.user = this.session.user;
 	yield next;
 });
 
-// TODO check user authentication
+// TODO check user authentication except on "/"
 app.use(function* (next) {
 	if (this.user) {
 		yield next;
