@@ -46,8 +46,15 @@ router.get("/auth/callback", function *() {
 		let tokens = Object.assign({}, oauthTokens, this.query);
 
 		let accessTokens = yield getAccessToken.call(oa, tokens.oauth_token, tokens.oauth_token_secret, tokens.oauth_verifier); 
+
+		this.session.user = {
+			token: accessTokens[0],
+			token_secret: accessTokens[1],
+			user_id: accessTokens[2].user_id,
+			screen_name: accessTokens[2].screen_name,
+			expires: accessTokens[2].x_auth_expires
+		};
 		
-		this.session.user = accessTokens[2];
 		this.redirect("/mentions");
 
 	} else {
