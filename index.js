@@ -21,22 +21,12 @@ render(app, {
 app.keys = ["KEYS", process.env.SESSION_KEY];
 
 app.use(session({
-	user: true
+	user: undefined
 }));
 
 app.use(function* (next) {
 	this.user = this.session.user;
 	yield next;
-});
-
-// TODO check user authentication except on "/"
-app.use(function* (next) {
-	if (this.user) {
-		yield next;
-	}
-	else {
-		this.redirect("/");
-	}
 });
 
 app.use(require("./src/server/routes/routes"));

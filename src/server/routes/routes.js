@@ -1,11 +1,20 @@
 var router = require("koa-router")();
 
-const handler = function*() {
+const rootHandler = function*() {
 	yield this.render("template");
 }
 
-router.get("/", handler);
-router.get("/mentions", handler);
-router.get("/blocks", handler);
+const authHandler = function*() {
+	if (this.user) {
+		yield this.render("template");
+	}
+	else {
+		this.redirect("/");
+	}
+}
+
+router.get("/", rootHandler);
+router.get("/mentions", authHandler);
+router.get("/blocks", authHandler);
 
 module.exports = router.routes()

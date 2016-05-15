@@ -26297,12 +26297,6 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			onLogInClick: function onLogInClick() {
-				// login
-			},
-			onSignUpClick: function onSignUpClick() {
-				// sign up
-			},
 			onLogOutClick: function onLogOutClick() {
 				// log out
 			}
@@ -26340,22 +26334,9 @@ webpackJsonpBlockParty__name_([0,1],[
 				"div",
 				{ className: "header-group" },
 				_react2.default.createElement(
-					"div",
-					{ className: "header-link",
-						onClick: props.onLogInClick },
+					"a",
+					{ href: "/auth/twitter", className: "header-link" },
 					"Log In"
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "header-link",
-						onClick: props.onSignUpClick },
-					"Sign Up"
-				),
-				_react2.default.createElement(
-					"div",
-					{ className: "header-link",
-						onClick: props.onLogOutClick },
-					"Log Out"
 				)
 			)
 		);
@@ -26396,7 +26377,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".header {\n  background-color: #55ACEE;\n  color: #FFF;\n  font-family: 'Quicksand', sans-serif;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  line-height: 60px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n.header-link {\n  cursor: pointer;\n  display: inline-block;\n  margin-right: 1em;\n}\n", ""]);
+	exports.push([module.id, ".header {\n  background-color: #55ACEE;\n  color: #FFF;\n  font-family: 'Quicksand', sans-serif;\n  font-size: 1em;\n  height: 60px;\n  letter-spacing: 1px;\n  line-height: 60px;\n  margin: 0;\n  width: 100%;\n}\n.header-group {\n  float: right;\n}\n.header-link {\n  color: #FFF;\n  cursor: pointer;\n  display: inline-block;\n  margin-right: 1em;\n  text-decoration: none;\n}\n", ""]);
 
 	// exports
 
@@ -27176,7 +27157,6 @@ webpackJsonpBlockParty__name_([0,1],[
 				return res.json();
 			}).then(function (responseData) {
 				if (responseData.success) {
-					console.log(responseData);
 					dispatch({
 						type: "LOAD_BLOCKS",
 						blocks: responseData.blocks
@@ -27322,7 +27302,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 	var login = exports.login = function login(state, action) {
-		_reactRouter.browserHistory.push("/");
+		_reactRouter.browserHistory.push("/auth/twitter");
 	};
 
 	var logout = exports.logout = function logout(state, action) {
