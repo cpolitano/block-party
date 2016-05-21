@@ -1,7 +1,7 @@
 
-export const getMentions = (screen_name) => {
+export const getMentions = () => {
 	return (dispatch) => {
-		fetch(`/api/mentions/${screen_name}`, {
+		fetch(`/api/mentions`, {
 			credentials: "same-origin"
 		})
 		.then((res) => res.json())

@@ -26967,7 +26967,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
 			onMentionsClick: function onMentionsClick() {
-				dispatch((0, _mentions.getMentions)("blockdotparty"));
+				dispatch((0, _mentions.getMentions)());
 			}
 		};
 	};
@@ -26984,9 +26984,9 @@ webpackJsonpBlockParty__name_([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var getMentions = exports.getMentions = function getMentions(screen_name) {
+	var getMentions = exports.getMentions = function getMentions() {
 		return function (dispatch) {
-			fetch("/api/mentions/" + screen_name, {
+			fetch("/api/mentions", {
 				credentials: "same-origin"
 			}).then(function (res) {
 				return res.json();
