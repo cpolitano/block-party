@@ -1,7 +1,7 @@
 
-export const getBlocks = (screen_name) => {
+export const getBlocks = () => {
 	return (dispatch) => {
-		fetch(`/api/blocks/${screen_name}`, {
+		fetch(`/api/blocks`, {
 			credentials: "same-origin"
 		})
 		.then((res) => res.json())

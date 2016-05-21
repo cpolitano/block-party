@@ -27132,7 +27132,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
 			onBlocksClick: function onBlocksClick() {
-				dispatch((0, _blocks.getBlocks)("blockdotparty"));
+				dispatch((0, _blocks.getBlocks)());
 			}
 		};
 	};
@@ -27149,9 +27149,9 @@ webpackJsonpBlockParty__name_([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var getBlocks = exports.getBlocks = function getBlocks(screen_name) {
+	var getBlocks = exports.getBlocks = function getBlocks() {
 		return function (dispatch) {
-			fetch("/api/blocks/" + screen_name, {
+			fetch("/api/blocks", {
 				credentials: "same-origin"
 			}).then(function (res) {
 				return res.json();
