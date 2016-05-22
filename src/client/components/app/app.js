@@ -4,6 +4,11 @@ import Header from "./header";
 require("./app.less");
 
 class App extends Component {
+
+	componentWillMount() {
+		this.props.onMount();
+	}
+
 	render() {
 
 		return (
@@ -20,12 +25,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		// 
+		user: state.user.user
 	}
 }
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		onMount(){
+			dispatch({
+				type: "FETCH_USER"
+			})
+		},
 		onLogOutClick: () => {
 			// log out
 		}
