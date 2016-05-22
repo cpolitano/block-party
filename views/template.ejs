@@ -8,6 +8,9 @@
 
     <body>
         <div id="block-party-app"></div>
+        <script type="text/javascript">
+            window.__USER__ = <%- JSON.stringify(user) %>
+        </script>
         <script src="/assets/common.js"></script>
         <script src="/assets/BlockParty.js"></script>
     </body>

@@ -18,7 +18,6 @@ router.get("/", function *() {
 
 		var params = {screen_name: this.user.screen_name};
 		var response = yield getTimeline.call(client, "blocks/list", params); 
-		console.log(response);
 		var blocks = response[0].users;
 		
 		this.body = {
