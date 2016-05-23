@@ -11,7 +11,7 @@ export default function Header(props) {
 
 	if ( props.user !== "" ) {
 		Login = (
-			<a href="/" className="header-link">
+			<a href=`http://twitter.com/${props.user}` className="header-link">
 				Logged in as {props.user}
 			</a>
 		);

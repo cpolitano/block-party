@@ -25,7 +25,9 @@ app.use(session({
 }));
 
 app.use(function* (next) {
-	this.user = this.session.user;
+	if ( this.session.user ) {
+		this.user = this.session.user;
+	}
 	yield next;
 });
 
