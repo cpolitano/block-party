@@ -3,7 +3,6 @@
 autoblocking abusive twitter users so you don't have to.
 
 ### todo:
-- Persist recent mentions and blocks to Redux store
 - Examine user mentions for abusive language
 - Block users responsible for abusive tweets
 - Persist user data to DB

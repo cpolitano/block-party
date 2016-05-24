@@ -10,10 +10,6 @@ class Welcome extends Component {
 			<div className="welcome">
 				<h1>welcome to the block party</h1>
 				<div className="welcome-button"
-					onClick={this.props.onSignUpClick}>
-					sign up
-				</div>
-				<div className="welcome-button"
 					onClick={this.props.onMentionsClick}>
 					go to mentions
 				</div>
