@@ -7,10 +7,16 @@ require("./blocks.less");
 
 class Blocks extends Component {
 
+	componentWillMount() {
+		if ( this.props.blocks.length === 0 ) {
+			this.props.getBlocks();
+		}
+	}
+
 	renderBlocks(block) {
 
 		return (
-			<li key={block.id_str}>
+			<li key={block.id_str} className="block">
 				<span className="block-user">{block.name}</span>
 				{block.screen_name}
 			</li>
@@ -22,10 +28,6 @@ class Blocks extends Component {
 		return (
 			<div className="blocks">
 				<h2>Blocks</h2>
-				<div className="blocks-button"
-					onClick={this.props.onBlocksClick}>
-					Get Blocks
-				</div>
 				<ul className="blocks-list">
 					{this.props.blocks.map(this.renderBlocks, this)}
 				</ul>
@@ -44,7 +46,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onBlocksClick: () => {
+		getBlocks: () => {
 			dispatch(getBlocks())
 		}
 	}
