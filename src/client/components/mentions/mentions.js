@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { Component } from "react";
 import {
-	getMentions
+	getMentions,
+	analyzeMentions
 } from "../../actions/async/mentions"
 require("./mentions.less");
 
@@ -30,6 +31,10 @@ class Mentions extends Component {
 		return (
 			<div className="mentions">
 				<h2>Recent Mentions</h2>
+				<div className="mentions-button"
+					onClick={this.props.analyzeMentions}>
+					analyze mentions
+				</div>
 				<ul className="mentions-list">
 					{this.props.mentions.map(this.renderTweets, this)}
 				</ul>
@@ -50,6 +55,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getMentions: () => {
 			dispatch(getMentions())
+		},
+		analyzeMentions: () => {
+			dispatch(analyzeMentions())
 		}
 	}
 }

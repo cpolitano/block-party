@@ -28,6 +28,6 @@ router.get("/", function *() {
 		this.redirect("/");
 	}
 
-})
+});
 
 module.exports = router
