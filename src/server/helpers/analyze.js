@@ -3,8 +3,8 @@ require("dotenv").load();
 
 const WORDS = process.env.WORDS_ARRAY; 
 
-const analyzeWords = (mention) => {
-	let mentionWords = mention.text.toLowercase().split(" ");
+const checkWords = (mention) => {
+	let mentionWords = mention.text.toLowerCase().split(" ");
 	for (let word of mentionWords) {
 		if ( WORDS.includes(word) ) {
 			return true;
@@ -17,6 +17,6 @@ const checkFriendship = (user) => {
 }
 
 module.exports = {
-	analyzeWords: analyzeWords,
+	checkWords: checkWords,
 	checkFriendship: checkFriendship
 }

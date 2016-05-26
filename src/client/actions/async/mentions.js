@@ -23,9 +23,12 @@ export const analyzeMentions = () => {
 
 		fetch(`/api/mentions`, {
 			credentials: "same-origin",
-			"Content-Type": "application/json",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json"
+			},
 			method: "POST",
-			body: mentions
+			body: JSON.stringify(mentions)
 		})
 		.then((res) => res.json())
 		.then((responseData) => {
