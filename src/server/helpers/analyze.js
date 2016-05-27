@@ -1,12 +1,17 @@
 "use strict";
 require("dotenv").load();
 
-const WORDS = process.env.WORDS_ARRAY; 
+let WORDS = process.env.WORDS.split(",");
+let WORDS_HASH = {};
+for (var i = 0; i < WORDS.length; i++) {
+	WORDS_HASH[WORDS[i]] = true;
+}
 
 const checkWords = (mention) => {
-	let mentionWords = mention.text.toLowerCase().split(" ");
-	for (let word of mentionWords) {
-		if ( WORDS.includes(word) ) {
+	let mentionWords = mention.text.toLowerCase().replace(/[^\w\s]/gi, "").split(" ");
+
+	for (var i = 0; i < mentionWords.length; i++) {
+		if ( WORDS_HASH[mentionWords[i]] ) {
 			return true;
 		}
 	}

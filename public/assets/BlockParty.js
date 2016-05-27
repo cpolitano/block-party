@@ -26270,6 +26270,11 @@ webpackJsonpBlockParty__name_([0,1],[
 		}
 
 		_createClass(App, [{
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				this.props.onMount();
+			}
+		}, {
 			key: "render",
 			value: function render() {
 
@@ -26291,12 +26296,18 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var mapStateToProps = function mapStateToProps(state) {
 		return {
-			//
+			user: state.user.user
 		};
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
+			onMount: function onMount() {
+				dispatch({
+					type: "FETCH_USER"
+				});
+			},
+
 			onLogOutClick: function onLogOutClick() {
 				// log out
 			}
@@ -26327,17 +26338,29 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	function Header(props) {
 
+		var Login = _react2.default.createElement(
+			"a",
+			{ href: "/auth/twitter", className: "header-link" },
+			"Log In"
+		);
+
+		if (props.user !== "") {
+			var twitterLink = "http:\/\/twitter.com\/" + props.user;
+			Login = _react2.default.createElement(
+				"a",
+				{ href: twitterLink, className: "header-link" },
+				"Logged in as ",
+				props.user
+			);
+		}
+
 		return _react2.default.createElement(
 			"header",
 			{ className: "header" },
 			_react2.default.createElement(
 				"div",
 				{ className: "header-group" },
-				_react2.default.createElement(
-					"a",
-					{ href: "/auth/twitter", className: "header-link" },
-					"Log In"
-				)
+				Login
 			)
 		);
 	}
@@ -26780,12 +26803,6 @@ webpackJsonpBlockParty__name_([0,1],[
 					React.createElement(
 						"div",
 						{ className: "welcome-button",
-							onClick: this.props.onSignUpClick },
-						"sign up"
-					),
-					React.createElement(
-						"div",
-						{ className: "welcome-button",
 							onClick: this.props.onMentionsClick },
 						"go to mentions"
 					),
@@ -26905,13 +26922,20 @@ webpackJsonpBlockParty__name_([0,1],[
 		}
 
 		_createClass(Mentions, [{
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				if (this.props.mentions.length === 0) {
+					this.props.getMentions();
+				}
+			}
+		}, {
 			key: "renderTweets",
 			value: function renderTweets(tweet) {
 				var tweetUrl = "https://twitter.com/" + tweet.user.screen_name + "/status/" + tweet.id_str;
 
 				return React.createElement(
 					"li",
-					{ key: tweet.id },
+					{ key: tweet.id, className: "mention" },
 					React.createElement(
 						"span",
 						{ className: "mentions-user" },
@@ -26936,13 +26960,13 @@ webpackJsonpBlockParty__name_([0,1],[
 					React.createElement(
 						"h2",
 						null,
-						"Mentions"
+						"Recent Mentions"
 					),
 					React.createElement(
 						"div",
 						{ className: "mentions-button",
-							onClick: this.props.onMentionsClick },
-						"Get Mentions"
+							onClick: this.props.analyzeMentions },
+						"analyze mentions"
 					),
 					React.createElement(
 						"ul",
@@ -26966,8 +26990,11 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			onMentionsClick: function onMentionsClick() {
+			getMentions: function getMentions() {
 				dispatch((0, _mentions.getMentions)());
+			},
+			analyzeMentions: function analyzeMentions() {
+				dispatch((0, _mentions.analyzeMentions)());
 			}
 		};
 	};
@@ -26987,7 +27014,8 @@ webpackJsonpBlockParty__name_([0,1],[
 	var getMentions = exports.getMentions = function getMentions() {
 		return function (dispatch) {
 			fetch("/api/mentions", {
-				credentials: "same-origin"
+				credentials: "same-origin",
+				"Content-Type": "application/json"
 			}).then(function (res) {
 				return res.json();
 			}).then(function (responseData) {
@@ -26996,6 +27024,29 @@ webpackJsonpBlockParty__name_([0,1],[
 						type: "LOAD_MENTIONS",
 						mentions: responseData.tweets
 					});
+				}
+			});
+		};
+	};
+
+	var analyzeMentions = exports.analyzeMentions = function analyzeMentions() {
+		return function (dispatch, getState) {
+			var mentions = getState().mentions.mentions;
+			console.log(mentions[0]);
+
+			fetch("/api/mentions", {
+				credentials: "same-origin",
+				headers: {
+					Accept: "application/json",
+					"Content-Type": "application/json"
+				},
+				method: "POST",
+				body: JSON.stringify(mentions)
+			}).then(function (res) {
+				return res.json();
+			}).then(function (responseData) {
+				if (responseData.success) {
+					console.log(responseData);
 				}
 			});
 		};
@@ -27036,7 +27087,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".mentions {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.mentions-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.mentions-user {\n  display: block;\n  font-weight: 400;\n}\n.mentions-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.mentions-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
+	exports.push([module.id, ".mentions {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.mention {\n  margin-bottom: 0.5em;\n}\n.mentions-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.mentions-user {\n  display: block;\n  font-weight: 400;\n}\n.mentions-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.mentions-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
 
 	// exports
 
@@ -27077,12 +27128,19 @@ webpackJsonpBlockParty__name_([0,1],[
 		}
 
 		_createClass(Blocks, [{
+			key: "componentWillMount",
+			value: function componentWillMount() {
+				if (this.props.blocks.length === 0) {
+					this.props.getBlocks();
+				}
+			}
+		}, {
 			key: "renderBlocks",
 			value: function renderBlocks(block) {
 
 				return React.createElement(
 					"li",
-					{ key: block.id_str },
+					{ key: block.id_str, className: "block" },
 					React.createElement(
 						"span",
 						{ className: "block-user" },
@@ -27102,12 +27160,6 @@ webpackJsonpBlockParty__name_([0,1],[
 						"h2",
 						null,
 						"Blocks"
-					),
-					React.createElement(
-						"div",
-						{ className: "blocks-button",
-							onClick: this.props.onBlocksClick },
-						"Get Blocks"
 					),
 					React.createElement(
 						"ul",
@@ -27131,7 +27183,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 		return {
-			onBlocksClick: function onBlocksClick() {
+			getBlocks: function getBlocks() {
 				dispatch((0, _blocks.getBlocks)());
 			}
 		};
@@ -27201,7 +27253,7 @@ webpackJsonpBlockParty__name_([0,1],[
 
 
 	// module
-	exports.push([module.id, ".blocks {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.blocks-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.block-user {\n  display: block;\n  font-weight: 400;\n}\n.blocks-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.blocks-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
+	exports.push([module.id, ".blocks {\n  background-color: #FFF;\n  color: #111;\n  font-family: 'Quicksand', sans-serif;\n  font-weight: 300;\n}\n.block {\n  margin-bottom: 0.5em;\n}\n.blocks-list {\n  list-style-type: none;\n  margin-bottom: 0.5em;\n}\n.block-user {\n  display: block;\n  font-weight: 400;\n}\n.blocks-button {\n  background-color: #55ACEE;\n  border-radius: 3px;\n  color: #FFF;\n  cursor: pointer;\n  letter-spacing: 1px;\n  margin: 1em;\n  padding: 0.75em 1em;\n  text-align: center;\n  width: 150px;\n}\n.blocks-button:hover {\n  background-color: #147BC9;\n  transition: all 0.25 ease;\n}\n", ""]);
 
 	// exports
 
@@ -27225,7 +27277,16 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
-	var _mentions = __webpack_require__(259);
+	var _user = __webpack_require__(259);
+
+	Object.defineProperty(exports, "user", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_user).default;
+	  }
+	});
+
+	var _mentions = __webpack_require__(261);
 
 	Object.defineProperty(exports, "mentions", {
 	  enumerable: true,
@@ -27234,7 +27295,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	  }
 	});
 
-	var _blocks = __webpack_require__(261);
+	var _blocks = __webpack_require__(263);
 
 	Object.defineProperty(exports, "blocks", {
 	  enumerable: true,
@@ -27326,30 +27387,30 @@ webpackJsonpBlockParty__name_([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
+	exports.default = placeholder;
 
-	exports.default = function () {
+	var _user = __webpack_require__(260);
+
+	var actions = _interopRequireWildcard(_user);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+		user: ""
+	};
+
+	var actionsMap = {
+		"FETCH_USER": actions.fetchUser
+	};
+
+	function placeholder() {
 		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 		var action = arguments[1];
 
 		var fn = actionsMap[action.type];
 		if (!fn) return state;
-		var newState = Object.assign({}, state, fn(state, action));
-		return newState;
-	};
-
-	var _mentions = __webpack_require__(260);
-
-	var actions = _interopRequireWildcard(_mentions);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-	var initialState = {
-		mentions: []
-	};
-
-	var actionsMap = {
-		"LOAD_MENTIONS": actions.loadMentions
-	};
+		return Object.assign({}, state, fn(state, action));
+	}
 
 /***/ },
 /* 260 */
@@ -27360,9 +27421,10 @@ webpackJsonpBlockParty__name_([0,1],[
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	var loadMentions = exports.loadMentions = function loadMentions(state, action) {
+	var fetchUser = exports.fetchUser = function fetchUser() {
+		var user = window.__USER__;
 		return {
-			mentions: action.mentions
+			user: user
 		};
 	};
 
@@ -27386,7 +27448,56 @@ webpackJsonpBlockParty__name_([0,1],[
 		return newState;
 	};
 
-	var _blocks = __webpack_require__(262);
+	var _mentions = __webpack_require__(262);
+
+	var actions = _interopRequireWildcard(_mentions);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+	var initialState = {
+		mentions: []
+	};
+
+	var actionsMap = {
+		"LOAD_MENTIONS": actions.loadMentions
+	};
+
+/***/ },
+/* 262 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	var loadMentions = exports.loadMentions = function loadMentions(state, action) {
+		return {
+			mentions: action.mentions
+		};
+	};
+
+/***/ },
+/* 263 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+
+	exports.default = function () {
+		var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
+		var action = arguments[1];
+
+		var fn = actionsMap[action.type];
+		if (!fn) return state;
+		var newState = Object.assign({}, state, fn(state, action));
+		return newState;
+	};
+
+	var _blocks = __webpack_require__(264);
 
 	var actions = _interopRequireWildcard(_blocks);
 
@@ -27401,7 +27512,7 @@ webpackJsonpBlockParty__name_([0,1],[
 	};
 
 /***/ },
-/* 262 */
+/* 264 */
 /***/ function(module, exports) {
 
 	"use strict";
