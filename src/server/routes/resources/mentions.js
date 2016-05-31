@@ -39,27 +39,69 @@ router.get("/", function *() {
 });
 
 router.post("/", function *(next) {
-	// check trigger tweet authors' relationship to user 
-	// return trigger tweets and authors
+
+	// check mentions for abusive language 
+	// check friendship of tweet authors
+	// block non-friends
+
 	try {
 		const tweets = this.request.body;
-		let usersToCheck = []
+		let usersToCheck = "";
 
+		// TODO
+		// check for user uniqueness
+		// check that number of unique users is < 100 per Twitter API 
 		if (tweets.length > 0) {
-
 			for (let tweet of tweets) {
 				if (analyze.checkWords(tweet)) {
-					usersToCheck.push(tweet.user.screen_name);
+					usersToCheck = tweet.user.screen_name + "," + usersToCheck;
 				}
 			};
-
+			usersToCheck = usersToCheck.slice(0,-1);
 		}
 
-		this.body = {
-			success: true,
-			possibleBlocks: usersToCheck
-		};
+		if (usersToCheck.length > 0) {
 
+			const client = new Twitter({
+				consumer_key: process.env.TWITTER_CONSUMER_KEY,
+				consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+				access_token_key: this.user.token,
+				access_token_secret: this.user.token_secret
+			});
+
+			const getTwitter = thunkify(client.get);
+			const params = {screen_name: usersToCheck};
+			let relationships = [];
+			// https://api.twitter.com/1.1/friendships/lookup.json?screen_name=episod,twitterapi,whiteleaf,andypiper
+
+			try {
+				const response = yield getTwitter.call(client, "friendships/lookup", params); 
+				relationships = relationships.concat(response.body);
+				console.log(relationships);
+				
+				let blocks = relationships.map((relationship) => {
+					let friendship = relationship.connections;
+					if ( !friendship.includes("following") && !friendship.includes("followed_by") ) {
+						return relationship.screen_name;
+					}
+				})
+
+				console.log(blocks);
+				this.body = {
+					success: true,
+					blocks: blocks
+				};
+
+			} catch (err) {
+				console.log(err);
+				this.status = 500;
+			}
+
+		} else {
+			this.body = {
+				success: true
+			};
+		}
 	} catch (err) {
 		console.log(err);
 		this.status = 500;
