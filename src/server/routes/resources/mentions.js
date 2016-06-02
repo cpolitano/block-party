@@ -40,15 +40,12 @@ router.get("/", function *() {
 
 router.post("/", function *(next) {
 
-	// check mentions for abusive language 
-	// check friendship of tweet authors
-	// block non-friends
-
 	try {
 		const tweets = this.request.body;
 		let usersToCheck = "";
 
 		// TODO
+		// block non-friends
 		// check for user uniqueness
 		// check that number of unique users is < 100 per Twitter API 
 		if (tweets.length > 0) {
@@ -71,22 +68,18 @@ router.post("/", function *(next) {
 
 			const getTwitter = thunkify(client.get);
 			const params = {screen_name: usersToCheck};
-			let relationships = [];
-			// https://api.twitter.com/1.1/friendships/lookup.json?screen_name=episod,twitterapi,whiteleaf,andypiper
 
 			try {
 				const response = yield getTwitter.call(client, "friendships/lookup", params); 
-				relationships = relationships.concat(response.body);
-				console.log(relationships);
+				let relationships = response[0];
 				
 				let blocks = relationships.map((relationship) => {
-					let friendship = relationship.connections;
-					if ( !friendship.includes("following") && !friendship.includes("followed_by") ) {
+					let connection = relationship.connections;
+					if ( connection.indexOf("following") < 0 && connection.indexOf("followed_by") < 0 ) {
 						return relationship.screen_name;
 					}
 				})
 
-				console.log(blocks);
 				this.body = {
 					success: true,
 					blocks: blocks
