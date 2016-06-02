@@ -6,6 +6,33 @@ const thunkify = require("thunkify");
 const router = require("koa-router")();
 const analyze = require("../../helpers/analyze");
 
+const checkTweets = (tweets) => {
+	let usersToCheck = "";
+	for (let tweet of tweets) {
+		let userHash = {};
+		let userCount = 0;
+		// true if tweet language is potentially abusive
+		// checks for user uniqueness
+		// checks that number of unique users is < 100 per Twitter API 
+		if (analyze.checkWords(tweet)) {
+			let tweetAuthor = tweet.user.screen_name;
+			if (!userHash[tweetAuthor] && userCount > 100) {
+				userHash[tweetAuthor] = true;
+				// TODO more efficient string building
+				usersToCheck = tweet.user.screen_name + "," + usersToCheck;
+				userCount++;
+			} else {
+				// either tweet author already accounted for
+				// or volume of abuse is elevated
+				// TODO handle overflow conditions
+			}
+			
+		}
+	};
+	usersToCheck = usersToCheck.slice(0,-1);
+	return usersToCheck;
+}
+
 router.get("/", function *() {
 
 	if (this.user) {
@@ -42,19 +69,15 @@ router.post("/", function *(next) {
 
 	try {
 		const tweets = this.request.body;
-		let usersToCheck = "";
+		let usersToCheck;
 
-		// TODO
-		// block non-friends
-		// check for user uniqueness
-		// check that number of unique users is < 100 per Twitter API 
 		if (tweets.length > 0) {
-			for (let tweet of tweets) {
-				if (analyze.checkWords(tweet)) {
-					usersToCheck = tweet.user.screen_name + "," + usersToCheck;
-				}
+			usersToCheck = checkTweets(tweets);
+		} else {
+			this.body = {
+				success: true,
+				blocks: []
 			};
-			usersToCheck = usersToCheck.slice(0,-1);
 		}
 
 		if (usersToCheck.length > 0) {
@@ -80,6 +103,9 @@ router.post("/", function *(next) {
 					}
 				})
 
+				// TODO
+				// block non-friends
+
 				this.body = {
 					success: true,
 					blocks: blocks
@@ -92,7 +118,8 @@ router.post("/", function *(next) {
 
 		} else {
 			this.body = {
-				success: true
+				success: true,
+				blocks: []
 			};
 		}
 	} catch (err) {
