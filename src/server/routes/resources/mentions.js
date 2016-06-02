@@ -16,7 +16,7 @@ const checkTweets = (tweets) => {
 		// checks that number of unique users is < 100 per Twitter API 
 		if (analyze.checkWords(tweet)) {
 			let tweetAuthor = tweet.user.screen_name;
-			if (!userHash[tweetAuthor] && userCount > 100) {
+			if (!userHash[tweetAuthor] && userCount < 100) {
 				userHash[tweetAuthor] = true;
 				// TODO more efficient string building
 				usersToCheck = tweet.user.screen_name + "," + usersToCheck;
@@ -70,6 +70,7 @@ router.post("/", function *(next) {
 	try {
 		const tweets = this.request.body;
 		let usersToCheck;
+		let usersToBlock = [];
 
 		if (tweets.length > 0) {
 			usersToCheck = checkTweets(tweets);
@@ -90,31 +91,41 @@ router.post("/", function *(next) {
 			});
 
 			const getTwitter = thunkify(client.get);
-			const params = {screen_name: usersToCheck};
+			const friendshipParams = {screen_name: usersToCheck};
 
 			try {
-				const response = yield getTwitter.call(client, "friendships/lookup", params); 
-				let relationships = response[0];
+				const friendshipsResponse = yield getTwitter.call(client, "friendships/lookup", friendshipParams); 
+				let relationships = friendshipsResponse[0];
 				
-				let blocks = relationships.map((relationship) => {
+				for (let relationship of relationships) {
 					let connection = relationship.connections;
 					if ( connection.indexOf("following") < 0 && connection.indexOf("followed_by") < 0 ) {
-						return relationship.screen_name;
+						usersToBlock.push(relationship.screen_name);
 					}
-				})
-
-				// TODO
-				// block non-friends
-
-				this.body = {
-					success: true,
-					blocks: blocks
 				};
-
-			} catch (err) {
+			} catch(err) {
 				console.log(err);
 				this.status = 500;
 			}
+
+			if (usersToBlock.length > 0) {
+
+				try {
+					const postTwitter = thunkify(client.post);
+					for (let user of usersToBlock) {
+						let blocksResponse = yield postTwitter.call(client, "blocks/create", {screen_name: user}); 
+					}
+				} catch(err) {
+					console.log(err);
+					this.status = 500;
+				}
+
+			}
+
+			this.body = {
+				success: true,
+				blocks: usersToBlock
+			};
 
 		} else {
 			this.body = {

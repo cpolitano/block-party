@@ -3,11 +3,12 @@
 autoblocking abusive twitter users so you don't have to.
 
 ### todo:
-- Examine user mentions for abusive language
 - Block users responsible for abusive tweets
 - Persist user data to DB
 - Background process to check mentions at regular intervals
 - Bonus: connect to Twitter streaming api
+- Provide option to unblock users
+- Provide option to disengage from service
 
 ### technologies:
 - Koa
