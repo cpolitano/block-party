@@ -8,15 +8,13 @@ class Welcome extends Component {
 
 		return (
 			<div className="welcome">
-				<h1>welcome to the block party</h1>
-				<div className="welcome-button"
-					onClick={this.props.onMentionsClick}>
-					go to mentions
+				<h1 className="welcome-header">block party</h1>
+				<h2 className="welcome-subheader">Let's make Twitter fun again!</h2> 
+      			<h3 className="welcome-subheader">We auto-block the jerks so you can focus on the important stuff.</h3>
+				<div className="welcome-button">
+					<a href="/auth/twitter" className="welcome-link">log in with Twitter</a>
 				</div>
-				<div className="welcome-button"
-					onClick={this.props.onBlocksClick}>
-					go to blocks
-				</div>
+				<div className="welcome-button">tell me more</div>
 			</div>
 		)
 
@@ -31,9 +29,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onSignUpClick: () => {
-			// sign up
-		},
 		onMentionsClick: () => {
 			dispatch({
 				type: "CLICK_MENTIONS"
