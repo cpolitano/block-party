@@ -12,15 +12,17 @@ export const getMentions = () => {
 					type: "LOAD_MENTIONS",
 					mentions: responseData.tweets
 				});
+
+				if (responseData.tweets.length > 0) {
+					dispatch(analyzeMentions(responseData.tweets));
+				}
 			}
 		})
 	}
 }
 
-export const analyzeMentions = () => {
-	return (dispatch, getState) => {
-		const mentions = getState().mentions.mentions;
-
+export const analyzeMentions = (mentions) => {
+	return (dispatch) => {
 		fetch(`/api/mentions`, {
 			credentials: "same-origin",
 			headers: {
@@ -33,7 +35,14 @@ export const analyzeMentions = () => {
 		.then((res) => res.json())
 		.then((responseData) => {
 			if (responseData.success) {
-				console.log(responseData);
+				if (responseData.blocks.length > 0) {
+					dispatch({
+						type: "ADD_RECENT_BLOCKS",
+						recentlyBlocked: responseData.blocks
+					});
+				}
+				// if new blocks, remove tweets from mentions
+				// save removed tweets somewhere
 			}
 		})
 	}
