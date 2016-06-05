@@ -6,7 +6,12 @@ export const loadMentions = (state, action) => {
 }
 
 export const addRecentBlocks = (state, action) => {
+	let safeMentions = state.mentions.filter((mention) => {
+		return action.recentlyBlocked.indexOf(mention.user.screen_name) < 0
+	});
+
 	return {
-		recentlyBlocked: action.recentlyBlocked
+		recentlyBlocked: action.recentlyBlocked,
+		mentions: safeMentions
 	}
 }

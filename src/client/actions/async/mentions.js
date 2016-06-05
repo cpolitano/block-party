@@ -41,8 +41,7 @@ export const analyzeMentions = (mentions) => {
 						recentlyBlocked: responseData.blocks
 					});
 				}
-				// if new blocks, remove tweets from mentions
-				// save removed tweets somewhere
+				// TODO save removed tweets somewhere
 			}
 		})
 	}
