@@ -32,11 +32,11 @@ class Welcome extends Component {
 				</div>
 				<div className="welcome-text"
 					style={{opacity: this.state.expanded ? 1 : 0}}>
-					<p>Freedom to participate in online discourse is an essential component of freedom of speech.</p>
-					<p>All too often, voices are silenced by online harassment, like tweets that threaten physical violence and sexual assault.</p>
-					<p>Block Party helps by blocking these abusive users on your behalf.</p> 
+					<p>Freedom to participate in online discourse is essential to freedom of speech.</p>
+					<p>Too often, voices are silenced by aggressive harassment online--like tweets that threaten physical violence and sexual assault.</p>
+					<p>Block Party helps by blocking these abusive users on your behalf (because you have better things to do).</p> 
 					<p>If you are mentioned in a tweet containing abusive language, we automatically block the user and remove the tweet from your timeline.</p>
-					<p>Block Party will never block a Twitter user that you follow.</p>
+					<p>Block Party will never block a Twitter user that you follow. Let&#39;s party!</p>
 	      		</div>
 			</div>
 		)

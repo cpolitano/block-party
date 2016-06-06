@@ -1,7 +1,8 @@
 import * as actions from "../actions/blocks";
 
 const initialState = {
-	blocks: []
+	blocks: [],
+	recentlyFetched: false
 }
 
 const actionsMap = {

@@ -8,7 +8,7 @@ require("./blocks.less");
 class Blocks extends Component {
 
 	componentWillMount() {
-		if ( this.props.blocks.length === 0 ) {
+		if ( !this.props.recentlyFetched ) {
 			this.props.getBlocks();
 		}
 	}
@@ -38,9 +38,11 @@ class Blocks extends Component {
 
 const mapStateToProps = (state) => {
 	let blocks = state.blocks.blocks || [];
+	let recentlyFetched = state.mentions.recentlyFetched;
 
 	return {
-		blocks
+		blocks,
+		recentlyFetched
 	}
 }
 
