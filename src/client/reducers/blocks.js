@@ -6,7 +6,8 @@ const initialState = {
 }
 
 const actionsMap = {
-	"LOAD_BLOCKS": actions.loadBlocks
+	"LOAD_BLOCKS": actions.loadBlocks,
+	"UPDATE_BLOCKS": actions.updateBlocks
 }
 
 export default function (state = initialState, action) {

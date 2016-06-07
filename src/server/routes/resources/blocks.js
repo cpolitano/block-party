@@ -30,4 +30,33 @@ router.get("/", function *() {
 
 });
 
+router.post("/", function *() {
+
+	if (this.user) {
+		var client = new Twitter({
+			consumer_key: process.env.TWITTER_CONSUMER_KEY,
+			consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+			access_token_key: this.user.token,
+			access_token_secret: this.user.token_secret
+		});
+
+		var getTimeline = thunkify(client.post);
+		var userToUnblock = this.request.body.screen_name;
+		var params = {screen_name: userToUnblock};
+		var response = yield getTimeline.call(client, "blocks/destroy", params); 
+		if (response[0].screen_name === userToUnblock) {
+			this.body = {
+				success: true
+			};
+		} else {
+			this.body = {
+				success: false
+			};
+		}
+	} else {
+		this.redirect("/");
+	}
+
+});
+
 module.exports = router

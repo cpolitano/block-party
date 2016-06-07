@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import { Component } from "react";
 import {
-	getBlocks
+	getBlocks,
+	unblock
 } from "../../actions/async/blocks"
 require("./blocks.less");
 
@@ -17,8 +18,16 @@ class Blocks extends Component {
 
 		return (
 			<li key={block.id_str} className="block">
-				<span className="block-user">{block.name}</span>
-				{block.screen_name}
+				<div className="block-text">
+					<span className="block-user">{block.name}</span>
+					{block.screen_name}
+				</div>
+
+				<div 
+					className="blocks-button"
+					onClick={() => {this.props.unblock(block.screen_name)}}>
+					unblock
+				</div>
 			</li>
 		)
 	}
@@ -38,7 +47,7 @@ class Blocks extends Component {
 
 const mapStateToProps = (state) => {
 	let blocks = state.blocks.blocks || [];
-	let recentlyFetched = state.mentions.recentlyFetched;
+	let recentlyFetched = state.blocks.recentlyFetched;
 
 	return {
 		blocks,
@@ -50,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		getBlocks: () => {
 			dispatch(getBlocks())
+		},
+		unblock: (screen_name) => {
+			dispatch(unblock(screen_name))
 		}
 	}
 }
