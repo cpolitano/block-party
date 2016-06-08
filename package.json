@@ -34,6 +34,7 @@
     "file-loader": "^0.8.5",
     "history": "^2.1.1",
     "isomorphic-fetch": "^2.2.1",
+    "knex": "^0.11.5",
     "koa": "^1.2.0",
     "koa-bodyparser": "^2.2.0",
     "koa-ejs": "^3.0.0",
