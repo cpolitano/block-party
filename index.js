@@ -1,7 +1,6 @@
 "use strict";
 
 require("dotenv").load();
-var knex = require("knex");
 var path = require("path");
 var http = require("http");
 var koa = require("koa");
@@ -11,7 +10,7 @@ var session = require("koa-generic-session");
 var bodyParser = require("koa-bodyparser");
 var app = koa();
 
-var db = knex({
+var db = require("knex")({
 	client: "mysql",
 	connection: {
 		host: process.env.DB_HOST,
@@ -25,6 +24,11 @@ var db = knex({
 		min: 1,
 		max: 5
 	}
+});
+
+app.use(function* (next) {
+	this.db = db;
+	yield next;
 });
 
 app.use(bodyParser());
@@ -43,7 +47,6 @@ app.use(session({
 }));
 
 app.use(function* (next) {
-	this.db = db;
 	if ( this.session.user ) {
 		this.user = this.session.user;
 	}
