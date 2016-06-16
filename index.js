@@ -1,16 +1,17 @@
 "use strict";
 
 require("dotenv").load();
-var path = require("path");
-var http = require("http");
-var koa = require("koa");
-var render = require("koa-ejs");
-var serve = require("koa-static");
-var session = require("koa-generic-session");
-var bodyParser = require("koa-bodyparser");
-var app = koa();
+const path = require("path");
+const http = require("http");
+const koa = require("koa");
+const render = require("koa-ejs");
+const serve = require("koa-static");
+const session = require("koa-generic-session");
+const bodyParser = require("koa-bodyparser");
+const logger = require("./src/server/logger");
+const app = koa();
 
-var db = require("knex")({
+const db = require("knex")({
 	client: "mysql",
 	connection: {
 		host: process.env.DB_HOST,
@@ -24,6 +25,10 @@ var db = require("knex")({
 		min: 1,
 		max: 5
 	}
+});
+
+app.on("error", err => {
+	logger.warn(err);
 });
 
 app.use(function* (next) {
@@ -60,3 +65,4 @@ app.use(require("./src/server/routes/auth"));
 
 var server = http.createServer(app.callback());
 server.listen(process.env.BLOCK_PARTY_PORT);
+logger.info("App listening on " + process.env.BLOCK_PARTY_PORT);
