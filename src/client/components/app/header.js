@@ -18,9 +18,31 @@ export default function Header(props) {
 		);
 	}
 
+	let Nav = "";
+
+	if ( props.user !== "" ) {
+		Nav = (
+			<div>
+				<div 
+					className="header-link"
+					onClick={() => {props.toMentions()}}>
+					home
+				</div>
+				<div 
+					className="header-link"
+					onClick={() => {props.toBlocks()}}>
+					blocks
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<header className="header">
-			<div className="header-group">
+			<div className="header-group-left">
+				{Nav}
+			</div>
+			<div className="header-group-right">
 				{Login}
 			</div>
 		</header>

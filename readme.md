@@ -7,7 +7,6 @@ autoblocking abusive twitter users so you don't have to.
 - Background process to check mentions at regular intervals
 - Bonus: connect to Twitter streaming api
 - Provide option to disengage from service
-- Add header nav
 
 ### technologies:
 - Koa

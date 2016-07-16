@@ -31,9 +31,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		onMount(){
+		onMount: () => {
 			dispatch({
 				type: "FETCH_USER"
+			})
+		},
+		toMentions: () => {
+			dispatch({
+				type: "CLICK_MENTIONS"
+			})
+		},
+		toBlocks: () => {
+			dispatch({
+				type: "CLICK_BLOCKS"
 			})
 		},
 		onLogOutClick: () => {
